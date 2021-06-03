@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char **argv){
 	int arg1 = atoi(argv[1]);
@@ -10,9 +11,10 @@ int main(int argc, char **argv){
 		
         arg1 --;
         
+        int pid = fork();
         int k = 0;
-        if(fork()){
-            k = waitpid();
+        if(pid){
+            k = waitpid(pid, NULL, 0);
             printf("%d", k);  
         }else{
             k = 10;
