@@ -1,29 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 int main(int argc, char **argv){
-	int arg1 = atoi(argv[1]);
+    int k = atoi(argv[1]);
     
-    
-    while(arg1!=0) {
-		
-        arg1 --;
-        
-        int pid = fork();
-        int k = 0;
-        if(pid){
-            k = waitpid(pid, NULL, 0);
-            printf("%d", k);  
-        }else{
-            k = 10;
-            return k;
-        }
-        
-        
-	}
-    sleep(3);
+    while(k > 0) {
+        k--;
 
-	return 0;
+        int child = fork();
+        int response;
+
+        if(child == 0){
+            printf("child(%d) return 10\n",getpid());
+            return 10;
+        }else{
+            waitpid(pid, &response, 0);
+            printf("Parent(%d) get %d from child\n", getpid(), WEXITSTATUS(response));  
+        }
+    }
+    sleep(3);
+    return 0;
 }
