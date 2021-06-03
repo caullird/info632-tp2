@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char **argv){
 	int k = atoi(argv[1]);
@@ -12,7 +13,7 @@ int main(int argc, char **argv){
         printf("ID : %d",fork);
 
         if(fork){
-            wait();   
+            wait(NULL);   
         }else{
             sleep(10);
         }  
